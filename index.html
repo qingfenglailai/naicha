@@ -283,6 +283,20 @@
       background: #f0eeff;
     }
     .tea-card .t-name  { font-size: 0.78rem; color: #6c3fc5; font-weight: 700; line-height: 1.4; }
+    .tea-card .t-prob  {
+      display: inline-block;
+      margin-top: 5px;
+      font-size: 0.68rem;
+      color: #fff;
+      background: linear-gradient(135deg, #a29bfe, #fd79a8);
+      border-radius: 20px;
+      padding: 1px 7px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .tea-card.highlight .t-prob {
+      background: linear-gradient(135deg, #f9ca24, #e17055);
+    }
 
     /* ===== 彩带 ===== */
     #confetti-canvas {
@@ -347,80 +361,95 @@
 <script>
 // ============================================================
 //  奶茶店数据 —— 在此维护
-//  image : 店铺 Logo 图片路径（本地路径 或 网络URL均可）
-//  name  : 奶茶店名称
-//  desc  : 品牌简介
+//  image  : 店铺 Logo 图片路径（本地路径 或 网络URL均可）
+//  name   : 奶茶店名称
+//  desc   : 品牌简介
+//  weight : 中奖权重，所有店铺相同 → 每家概率完全相等
 // ============================================================
 var teaList = [
   {
     image: "https://ui-avatars.com/api/?name=喜茶&background=1a1a1a&color=fff&size=128&font-size=0.42&bold=true",
     name: "喜茶",
-    desc: "灵感之茶，现制鲜果茶先驱"
+    desc: "灵感之茶，现制鲜果茶先驱",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=奈雪&background=d4965a&color=fff&size=128&font-size=0.42&bold=true",
     name: "奈雪的茶",
-    desc: "好茶好软欧，高端现制茶"
+    desc: "好茶好软欧，高端现制茶",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=爷爷不泡茶&background=e31837&color=fff&size=128&font-size=0.42&bold=true",
     name: "爷爷不泡茶",
-    desc: "爷爷不泡茶，爷爷泡的茶"
+    desc: "爷爷不泡茶，爷爷泡的茶",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=KOI奶茶&background=8b5e3c&color=fff&size=128&font-size=0.42&bold=true",
     name: "KOI奶茶",
-    desc: "KOI奶茶，KOI奶茶"
+    desc: "KOI奶茶，KOI奶茶",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=椰不二&background=2d7a27&color=fff&size=128&font-size=0.42&bold=true",
     name: "椰不二",
-    desc: "椰不二，椰不二"
+    desc: "椰不二，椰不二",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=周四晚&background=c8934a&color=fff&size=128&font-size=0.42&bold=true",
     name: "周四晚",
-    desc: "周四晚，周四晚"
+    desc: "周四晚，周四晚",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=李若桃&background=f4a01c&color=fff&size=128&font-size=0.42&bold=true",
     name: "李若桃",
-    desc: "李若桃，李若桃"
+    desc: "李若桃，李若桃",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=东方墨兰&background=ff6b35&color=fff&size=128&font-size=0.42&bold=true",
     name: "东方墨兰",
-    desc: "东方墨兰，东方墨兰"
+    desc: "东方墨兰，东方墨兰",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=山山不夜&background=c0392b&color=fff&size=128&font-size=0.42&bold=true",
     name: "山山不夜",
-    desc: "山山不夜，山山不夜"
+    desc: "山山不夜，山山不夜",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=霸王&background=1e3a2f&color=fff&size=128&font-size=0.42&bold=true",
     name: "霸王茶姬",
-    desc: "东方茶，新生活"
+    desc: "东方茶，新生活",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=茶百道&background=c9956c&color=fff&size=128&font-size=0.42&bold=true",
     name: "茶百道",
-    desc: "茶百道，茶百道"
+    desc: "茶百道，茶百道",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=朴仁良心&background=4a6741&color=fff&size=128&font-size=0.42&bold=true",
     name: "朴仁良心",
-    desc: "朴仁良心，朴仁良心"
+    desc: "朴仁良心，朴仁良心",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=LELECHA&background=4a6741&color=fff&size=128&font-size=0.42&bold=true",
     name: "LELECHA乐乐茶",
-    desc: "LELECHA乐乐茶，LELECHA乐乐茶"
+    desc: "LELECHA乐乐茶，LELECHA乐乐茶",
+    weight: 1
   },
   {
     image: "https://ui-avatars.com/api/?name=麦记&background=4a6741&color=fff&size=128&font-size=0.42&bold=true",
     name: "麦记牛奶",
-    desc: "麦记牛奶，麦记牛奶"
+    desc: "麦记牛奶，麦记牛奶",
+    weight: 1
   }
 ];
 
@@ -440,13 +469,33 @@ $(function () {
 
 });
 
-// ---- 渲染奶茶店列表 ----
+// ---- 加权随机：返回 teaList 中命中的索引 ----
+function weightedRandom() {
+  var totalWeight = 0;
+  $.each(teaList, function (_, tea) {
+    totalWeight += (tea.weight || 1);
+  });
+  var rand = Math.random() * totalWeight;
+  var cumulative = 0;
+  for (var i = 0; i < teaList.length; i++) {
+    cumulative += (teaList[i].weight || 1);
+    if (rand < cumulative) return i;
+  }
+  return teaList.length - 1;
+}
+
+// ---- 渲染奶茶店列表（显示概率标签） ----
 function renderTeaGrid() {
+  var totalWeight = 0;
+  $.each(teaList, function (_, tea) { totalWeight += (tea.weight || 1); });
+
   var html = '';
   $.each(teaList, function (i, tea) {
+    var pct = (((tea.weight || 1) / totalWeight) * 100).toFixed(1);
     html += '<div class="tea-card" data-index="' + i + '">';
     html += '  <img class="t-img" src="' + tea.image + '" alt="' + tea.name + '" />';
     html += '  <span class="t-name">' + tea.name + '</span>';
+    html += '  <span class="t-prob">' + pct + '%</span>';
     html += '</div>';
   });
   $('#teaGrid').html(html);
@@ -502,8 +551,8 @@ function startDraw() {
   $('.tea-card').removeClass('highlight');
   $('#resultBox').removeClass('win').html('<span class="result-hint"><span class="spinning">🎰</span> 摇奖中，请稍候...</span>');
 
-  // 随机结果
-  var winIdx = Math.floor(Math.random() * teaList.length);
+  // 加权随机结果
+  var winIdx = weightedRandom();
 
   // 滚动动画参数
   var itemH    = 68;
